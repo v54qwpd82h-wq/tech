@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="ht">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>G-Legacy - Platfòm Sèvis</title>
+    <!-- Font Awesome pou Ikòn Pwofesyonèl -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #0a192f;
+            --secondary-color: #172a45;
+            --accent-color: #3066be;
+            --text-light: #f8f9fa;
+            --text-dark: #333333;
+            --card-bg: #ffffff;
+            --border-radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f3f4f6;
+            color: var(--text-dark);
+        }
+
+        /* Lanp / Chwa Lang (Screen 1) */
+        #language-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            color: var(--text-light);
+            transition: opacity 0.5s ease;
+        }
+
+        #language-screen h1 {
+            margin-bottom: 30px;
+            font-size: 2rem;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .lang-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 2px solid var(--text-light);
+            color: var(--text-light);
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            border-radius: var(--border-radius);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .lang-btn:hover {
+            background-color: var(--text-light);
+            color: var(--primary-color);
+        }
+
+        /* Sit Prensipal */
+        #main-site {
+            display: none;
+        }
+
+        /* Header / Navigasyon */
+        header {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-link {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: color 0.3s;
+            background: none;
+            border: none;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #a5c4f7;
+        }
+
+        /* Seksyon / Paj Kontni */
+        .page-section {
+            display: none;
+            padding: 60px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-section.active-section {
+            display: block;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background-color: var(--accent-color);
+            margin: 10px auto 0 auto;
+            border-radius: 2px;
+        }
+
+        /* Bannè Akèy */
+        .hero {
+            background-color: var(--secondary-color);
+            color: var(--text-light);
+            border-radius: var(--border-radius);
+            padding: 50px;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        /* Kadriyaj Sèvis (Grid) */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card i {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .card p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        /* Stil pou pri andedan kat yo */
+        .item-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--text-light);
+            padding: 10px 25px;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            transition: background 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background-color: #1d4ed8;
+        }
+
+        .fa-tiktok { color: #000000 !important; }
+        .fa-facebook { color: #1877f2 !important; }
+        .fa-youtube { color: #ff0000 !important; }
+        .fa-instagram { color: #e1306c !important; }
+
+        /* Tablo Plan Pri (Pricing Table) */
+        .pricing-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .price-card {
+            background-color: var(--card-bg);
+            border: 1px solid #e5e7eb;
+            border-radius: var(--border-radius);
+            padding: 40px 30px;
+            width: 320px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .price-card.featured {
+            border: 2px solid var(--accent-color);
+            transform: scale(1.05);
+        }
+
+        .price-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+        }
+
+        .price-features {
+            list-style: none;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+
+        .price-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f3f4f6;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .price-features i {
+            color: #10b981;
+        }
+
+        /* --- POPUP FORMULAIRE (MODAL) --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-box {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+        .modal-box h3 {
+            margin-bottom: 15px;
+            color: var(--primary-color);
+            font-size: 1.4rem;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        /* Bwat Enstriksyon Natcash */
+        .natcash-box {
+            background-color: #fff5f5;
+            border-left: 4px solid #e53e3e;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        .natcash-box strong {
+            color: #c53030;
+            font-size: 1.05rem;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #25d366; /* Koulè WhatsApp */
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .submit-btn:hover {
+            background-color: #128c7e;
+        }
+
+        footer {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 15px; padding: 20px; }
+            .page-section { padding: 40px 20px; }
+            .pricing-container { flex-direction: column; align-items: center; }
+            .price-card.featured { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. Paj Akèy / Chwa Lang -->
+    <div id="language-screen">
+        <h1>G-Legacy</h1>
+        <div class="lang-container">
+            <button class="lang-btn" onclick="selectLanguage('kr')"><i class="fa-solid fa-globe"></i> Kreyòl</button>
+            <button class="lang-btn" onclick="selectLanguage('en')"><i class="fa-solid fa-globe"></i> English</button>
+            <button class="lang-btn" onclick="selectLanguage('fr')"><i class="fa-solid fa-globe"></i> Français</button>
+        </div>
+    </div>
+
+    <!-- 2. Sit Prensipal la -->
+    <div id="main-site">
+        <header>
+            <div class="logo">G-LEGACY</div>
+            <nav>
+                <button class="nav-link active" onclick="switchTab('home')" id="nav-home">Akèy</button>
+                <button class="nav-link" onclick="switchTab('shop')" id="nav-shop">Shop & Vizibilite</button>
+                <button class="nav-link" onclick="switchTab('courses')" id="nav-courses">Kou sou Entènèt</button>
+                <button class="nav-link" onclick="switchTab('carrd')" id="nav-carrd">Kreyasyon Sit</button>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Paj Akèy Kontni -->
+            <section id="page-home" class="page-section active-section">
+                <div class="hero">
+                    <h3 id="hero-title">Byenveni sou G-Legacy</h3>
+                    <p id="hero-desc">Chwazi nan sèvis eksklizif nou yo pou devlope pwojè w ak rezo sosyal ou yo.</p>
+                </div>
+                <div class="services-grid">
+                    <div class="card">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <h3 id="card1-title">Shop & Vizibilite</h3>
+                        <p id="card1-desc">Booste kont TikTok, Facebook, Instagram ak YouTube ou rapidman.</p>
+                        <button class="btn" style="width: auto;" onclick="switchTab('shop')">Plis Enfòmasyon</button>
+                    </div>
+                    <div class="card">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        <h3 id="card2-title">Kou sou Entènèt</h3>
+                        <p id="card2-desc">Aprann kreye Tikomik epi pwodui pwòp liy kosmetik natirèl ou.</p>
+                        <button class="btn" style="width: auto;" onclick="switchTab('courses')">Plis Enfòmasyon</button>
+                    </div>
+                    <div class="card">
+                        <i class="fa-solid fa-laptop-code"></i>
+                        <h3 id="card3-title">Kreyasyon Sit Wèb</h3>
+                        <p id="card3-desc">Kreye pwòp sit entènèt pwofesyonèl ou fasilman gras ak sistèm Carrd la.</p>
+                        <button class="btn" style="width: auto;" onclick="switchTab('carrd')">Plis Enfòmasyon</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Paj Sèvis Shop & Vizibilite -->
+            <section id="page-shop" class="page-section">
+                <h2 id="title-shop">Shop & Vizibilite Pwofesyonèl</h2>
+                <div class="services-grid">
+                    <div class="card">
+                        <i class="fa-brands fa-tiktok"></i>
+                        <h3>TikTok Vizibilite</h3>
+                        <p>Ogmante Followers, Views ak Liks sou videyo w yo pwofesyonèlman.</p>
+                        <div class="item-price">15 $</div>
+                        <button class="btn" onclick="openOrderForm('Sèvis Vizibilite TikTok', '15 $')">Achte Vizibilite</button>
+                    </div>
+                    <div class="card">
+                        <i class="fa-brands fa-facebook"></i>
+                        <h3>Facebook Vizibilite</h3>
+                        <p>Booste paj ou, jwenn plis entèraksyon ak abòne reyèl.</p>
+                        <div class="item-price">12 $</div>
+                        <button class="btn" onclick="openOrderForm('Sèvis Vizibilite Facebook', '12 $')">Achte Vizibilite</button>
+                    </div>
+                    <div class="card">
+                        <i class="fa-brands fa-youtube"></i>
+                        <h3>YouTube Vizibilite</h3>
+                        <p>Gagne plis abòne ak èdtan gade pou kòmanse monetize kont ou.</p>
+                        <div class="item-price">25 $</div>
+                        <button class="btn" onclick="openOrderForm('Sèvis Vizibilite YouTube', '25 $')">Achte Vizibilite</button>
+                    </div>
+                    <div class="card">
+                        <i class="fa-brands fa-instagram"></i>
+                        <h3>Instagram Vizibilite</h3>
+                        <p>Gwo kwasans abòne ak enpak vizyèl pou mak ou oswa biznis ou.</p>
+                        <div class="item-price">10 $</div>
+                        <button class="btn" onclick="openOrderForm('Sèvis Vizibilite Instagram', '10 $')">Achte Vizibilite</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Paj Kou sou Entènèt -->
+            <section id="page-courses" class="page-section">
+                <h2 id="title-courses">Kou ak Fòmasyon sou Entènèt</h2>
+                <div class="services-grid">
+                    <div class="card">
+                        <i class="fa-solid fa-masks-theater"></i>
+                        <h3>Kou Kreye Tikomik</h3>
+                        <p>Aprann animasyon, teknik scripting ak fason pou fè bèl videyo Tikomik k ap mache.</p>
+                        <div class="item-price">30 $</div>
+                        <button class="btn" onclick="openOrderForm('Kou Kreye Tikomik', '30 $')">Achte Kou a</button>
+                    </div>
+                    <div class="card">
+                        <i class="fa-solid fa-soap"></i>
+                        <h3>Kou Savon Natirèl</h3>
+                        <p>Metòd etap pa etap pou fabrike savon natirèl san danje pou po.</p>
+                        <div class="item-price">20 $</div>
+                        <button class="btn" onclick="openOrderForm('Kou Savon Natirèl', '20 $')">Achte Kou a</button>
+                    </div>
+                    <div class="card">
+                        <i class="fa-solid fa-bottle-dropper"></i>
+                        <h3>Kou Lwil Cheve</h3>
+                        <p>Fòmilasyon sekrè ak lwil esansyèl pou kwasans ak swen cheve.</p>
+                        <div class="item-price">15 $</div>
+                        <button class="btn" onclick="openOrderForm('Kou Lwil Cheve', '15 $')">Achte Kou a</button>
+                    </div>
+                    <div class="card">
+                        <i class="fa-solid fa-jar"></i>
+                        <h3>Kou Krèm Po</h3>
+                        <p>Aprann kreye krèm idratant ak pwodui natirèl pou tout kalite po.</p>
+                        <div class="item-price">20 $</div>
+                        <button class="btn" onclick="openOrderForm('Kou Krèm Po', '20 $')">Achte Kou a</button>
+                    </div>
+                    <div class="card">
+                        <i class="fa-solid fa-spray-can-sparkles"></i>
+                        <h3>Kou Pafen</h3>
+                        <p>Atis ekstraksyon ak melanj odè pou kreye bon jan pafen pwofesyonèl.</p>
+                        <div class="item-price">25 $</div>
+                        <button class="btn" onclick="openOrderForm('Kou Pafen', '25 $')">Achte Kou a</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Paj Kreyasyon Sit Web ak Plan Carrd -->
+            <section id="page-carrd" class="page-section">
+                <h2 id="title-pricing">Chwazi yon Plan pou Kreye Sit Ou</h2>
+                <div class="pricing-container">
+                    
+                    <!-- Plan Limite -->
+                    <div class="price-card">
+                        <div>
+                            <h3>Plan Limite</h3>
+                            <div class="price">20 $</div>
+                            <ul class="price-features">
+                                <li><i class="fa-solid fa-check"></i> <span>Kreye jiska 9 sit wèb</span></li>
+                                <li><i class="fa-solid fa-plus"></i> <span>2 Sit anplis kòm Bonis</span></li>
+                                <li><i class="fa-solid fa-circle-exclamation"></i> <span>Tan limite</span></li>
+                            </ul>
+                        </div>
+                        <button class="btn" onclick="openOrderForm('Plan Limite Carrd', '20 $')">Chwazi Plan Sa a</button>
+                    </div>
+
+                    <!-- Plan Pro -->
+                    <div class="price-card featured">
+                        <div>
+                            <h3>Plan Pro</h3>
+                            <div class="price">50 $</div>
+                            <ul class="price-features">
+                                <li><i class="fa-solid fa-check"></i> <span>Kreye kantite sit ou vle</span></li>
+                                <li><i class="fa-solid fa-infinity"></i> <span>Ilimitè ak Pou tout tan</span></li>
+                                <li><i class="fa-solid fa-star"></i> <span>Sipò priyoritè enkli</span></li>
+                            </ul>
+                        </div>
+                        <button class="btn" onclick="openOrderForm('Plan Pro Carrd', '50 $')">Chwazi Plan Pro</button>
+                    </div>
+
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 G-Legacy. Tout dwa rezève.</p>
+        </footer>
+    </div>
+
+    <!-- --- POPUP FORMULAIRE (MODAL HTML) --- -->
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal-box">
+            <span class="close-modal" onclick="closeOrderForm()">&times;</span>
+            <h3 id="modal-product-title">Fòmilè Kòmand</h3>
+            
+            <!-- Bwat Enfòmasyon Natcash -->
+            <div class="natcash-box">
+                <p id="natcash-text">ℹ️ <strong>Peman Natcash :</strong> Tanpri voye kòb la sou nimewo sa a anvan w konfime kòmand lan :</p>
+                <p style="font-size: 1.2rem; font-weight: bold; text-align: center; margin-top: 5px; color: #e53e3e;">
+                    <i class="fa-solid fa-money-bill-transfer"></i> 43 59 5335
+                </p>
+            </div>
+
+            <form id="whatsappForm" onsubmit="sendToWhatsApp(event)">
+                <input type="hidden" id="selected-product">
+                <input type="hidden" id="selected-price">
+                
+                <div class="form-group">
+                    <label id="lbl-name" for="client-name">Non konplè:</label>
+                    <input type="text" id="client-name" required placeholder="Mete non w ak siyati w">
+                </div>
+                <div class="form-group">
+                    <label id="lbl-address" for="client-address">Adrès ou:</label>
+                    <input type="text" id="client-address" required placeholder="Kote w rete">
+                </div>
+                <div class="form-group">
+                    <label id="lbl-phone" for="client-phone">Nimewo telefòn:</label>
+                    <input type="tel" id="client-phone" required placeholder="Egz: +509 3xxx-xxxx">
+                </div>
+                <button type="submit" class="submit-btn">
+                    <i class="fa-brands fa-whatsapp"></i> <span id="btn-submit-text">Konfime sou WhatsApp</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Done pou Tradiksyon yo
+        const translations = {
+            kr: {
+                home: "Akèy", shop: "Shop & Vizibilite", courses: "Kou sou Entènèt", carrd: "Kreyasyon Sit",
+                heroT: "Byenveni sou G-Legacy", heroD: "Chwazi nan sèvis eksklizif nou yo pou devlope pwojè w ak rezo sosyal ou yo.",
+                c1T: "Shop & Vizibilite", c1D: "Booste kont TikTok, Facebook, Instagram ak YouTube ou rapidman.",
+                c2T: "Kou sou Entènèt", c2D: "Aprann kreye Tikomik epi pwodui pwòp liy kosmetik natirèl ou.",
+                c3T: "Kreyasyon Sit Wèb", c3D: "Kreye pwòp sit entènèt pwofesyonèl ou fasilman gras ak sistèm Carrd la.",
+                tShop: "Shop & Vizibilite Pwofesyonèl", tCourses: "Kou ak Fòmasyon sou Entènèt", tPrice: "Chwazi yon Plan pou Kreye Sit Ou",
+                formT: "Fòmilè Kòmand", name: "Non konplè:", address: "Adrès ou:", phone: "Nimewo telefòn:", send: "Konfime sou WhatsApp",
+                natcash: "ℹ️ <strong>Peman Natcash :</strong> Tanpri voye kòb la sou nimewo sa a anvan w konfime kòmand lan :"
+            },
+            en: {
+                home: "Home", shop: "Shop & Visibility", courses: "Online Courses", carrd: "Website Creation",
+                heroT: "Welcome to G-Legacy", heroD: "Choose from our exclusive services to grow your projects and social media.",
+                c1T: "Shop & Visibility", c1D: "Boost your TikTok, Facebook, Instagram, and YouTube accounts fast.",
+                c2T: "Online Courses", c2D: "Learn to create Tikomik and produce your own natural cosmetics line.",
+                c3T: "Website Creation", c3D: "Create your own professional website easily using the Carrd system.",
+                tShop: "Professional Shop & Visibility", tCourses: "Online Courses & Training", tPrice: "Choose a Plan to Create Your Site",
+                formT: "Order Form", name: "Full Name:", address: "Address:", phone: "Phone Number:", send: "Confirm on WhatsApp",
+                natcash: "ℹ️ <strong>Natcash Payment:</strong> Please send the money to this number before confirming your order:"
+            },
+            fr: {
+                home: "Accueil", shop: "Boutique & Visibilité", courses: "Cours en Ligne", carrd: "Création de Site",
+                heroT: "Bienvenue sur G-Legacy", heroD: "Choisissez parmi nos services exclusifs pour développer vos projets et réseaux sociaux.",
+                c1T: "Boutique & Visibilité", c1D: "Boostez rapidement vos comptes TikTok, Facebook, Instagram et YouTube.",
+                c2T: "Cours en Ligne", c2D: "Apprenez à créer des Tikomik et à produire votre propre gamme de cosmétiques naturels.",
+                c3T: "Création de Site Web", c3D: "Créez facilement votre propre site web professionnel grâce au système Carrd.",
+                tShop: "Boutique & Visibilité Professionnelle", tCourses: "Cours & Formations en Ligne", tPrice: "Choisissez un Plan pour Créer Votre Site",
+                formT: "Formulaire de Commande", name: "Nom complet :", address: "Adresse :", phone: "Numéro de téléphone :", send: "Confirmer sur WhatsApp",
+                natcash: "ℹ️ <strong>Paiement Natcash :</strong> Veuillez envoyer l'argent à ce numéro avant de confirmer la commande :"
+            }
+        };
+
+        let currentLang = 'kr';
+
+        function selectLanguage(lang) {
+            currentLang = lang;
+            document.getElementById('nav-home').innerText = translations[lang].home;
+            document.getElementById('nav-shop').innerText = translations[lang].shop;
+            document.getElementById('nav-courses').innerText = translations[lang].courses;
+            document.getElementById('nav-carrd').innerText = translations[lang].carrd;
+            
+            document.getElementById('hero-title').innerText = translations[lang].heroT;
+            document.getElementById('hero-desc').innerText = translations[lang].heroD;
+            
+            document.getElementById('card1-title').innerText = translations[lang].c1T;
+            document.getElementById('card1-desc').innerText = translations[lang].c1D;
+            document.getElementById('card2-title').innerText = translations[lang].c2T;
+            document.getElementById('card2-desc').innerText = translations[lang].c2D;
+            document.getElementById('card3-title').innerText = translations[lang].c3T;
+            document.getElementById('card3-desc').innerText = translations[lang].c3D;
+
+            document.getElementById('title-shop').innerText = translations[lang].tShop;
+            document.getElementById('title-courses').innerText = translations[lang].tCourses;
+            document.getElementById('title-pricing').innerText = translations[lang].tPrice;
+
+            document.getElementById('lbl-name').innerText = translations[lang].name;
+            document.getElementById('lbl-address').innerText = translations[lang].address;
+            document.getElementById('lbl-phone').innerText = translations[lang].phone;
+            document.getElementById('btn-submit-text').innerText = translations[lang].send;
+            document.getElementById('natcash-text').innerHTML = translations[lang].natcash;
+
+            document.getElementById('language-screen').style.opacity = 0;
+            setTimeout(() => {
+                document.getElementById('language-screen').style.display = 'none';
+                document.getElementById('main-site').style.display = 'block';
+            }, 500);
+        }
+
+        function switchTab(tabId) {
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(section => section.classList.remove('active-section'));
+            
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => link.classList.remove('active'));
+            
+            document.getElementById(`page-${tabId}`).classList.add('active-section');
+            event.currentTarget.classList.add('active');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // Ajoute paramèt Pri a nan fòm lan
+        function openOrderForm(productName, productPrice) {
+            document.getElementById('selected-product').value = productName;
+            document.getElementById('selected-price').value = productPrice;
+            document.getElementById('modal-product-title').innerText = translations[currentLang].formT + " : " + productName + " (" + productPrice + ")";
+            document.getElementById('orderModal').style.display = 'flex';
+        }
+
+        function closeOrderForm() {
+            document.getElementById('orderModal').style.display = 'none';
+            document.getElementById('whatsappForm').reset();
+        }
+
+        function sendToWhatsApp(event) {
+            event.preventDefault();
+
+            const nimewo = "50934830635"; 
+            const pwodui = document.getElementById('selected-product').value;
+            const pri = document.getElementById('selected-price').value;
+            const non = document.getElementById('client-name').value;
+            const adres = document.getElementById('client-address').value;
+            const telefon = document.getElementById('client-phone').value;
+
+            // Prepare bèl mesaj tèks la ak tout pri a ladan l
+            let mesaj = `Salouté G-Legacy! Mwen sot fè yon peman Natcash pou yon kòmand.\n\n`;
+            mesaj += `🛍️ *Sèvis/Pwodui:* ${pwodui}\n`;
+            mesaj += `💰 *Pri:* ${pri}\n`;
+            mesaj += `👤 *Non Kliyan:* ${non}\n`;
+            mesaj += `📍 *Adrès:* ${adres}\n`;
+            mesaj += `📞 *Telefòn:* ${telefon}\n\n`;
+            mesaj += `💸 *Metòd Peman:* Natcash transfere sou 43595335`;
+
+            const mesajKòde = encodeURIComponent(mesaj);
+            const whatsappUrl = `https://api.whatsapp.com/send?phone=${nimewo}&text=${mesajKòde}`;
+
+            window.open(whatsappUrl, '_blank');
+            closeOrderForm();
+        }
+    </script>
+</body>
+</html>
